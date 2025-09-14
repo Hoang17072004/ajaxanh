@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f7f9fa;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 60%;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 14px 18px;
+      text-align: center;
+    }
+    thead th {
+      background: #3498db;
+      color: #fff;
+      font-size: 1.1em;
+      letter-spacing: 1px;
+      border: none;
+    }
+    tbody tr:nth-child(even) {
+      background: #f2f6fc;
+    }
+    tbody tr:hover {
+      background: #eaf4fb;
+      transition: background 0.2s;
+    }
+    table, th, td {
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Kết quả học tập của tôi</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Môn học</th>
+        <th>Điểm</th>
+      </tr>
+    </thead>
+    <tbody id="myGrades"></tbody>
+  </table>
+</body>
+</html>
