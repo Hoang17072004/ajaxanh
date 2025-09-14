@@ -1,0 +1,1 @@
+Dự án mà có 2 role là giáo viên và học sinh, giáo viên thì sẽ vào chọn lớp học rồi nó sẽ hiện danh sách điểm sinh viên tương ứng lớp đó,sau đó giáo viên chọn edit. Còn sinh viên vào thì xem điểm tất cả các môn
