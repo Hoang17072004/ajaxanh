@@ -47,9 +47,23 @@
     table, th, td {
       border: none;
     }
+    button, input[type="button"] {
+      padding: 6px 14px;
+      border: none;
+      border-radius: 4px;
+      background: #3498db;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    button:hover, input[type="button"]:hover {
+      background: #217dbb;
+    }
   </style>
 </head>
 <body>
+  <button style="float:right; margin-bottom:20px;" onclick="window.location.href='index.html'">Đăng xuất</button>
   <h2>Kết quả học tập của tôi</h2>
   <table>
     <thead>
@@ -60,5 +74,6 @@
     </thead>
     <tbody id="myGrades"></tbody>
   </table>
+  <script src="app.js"></script>
 </body>
 </html>

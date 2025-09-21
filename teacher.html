@@ -64,8 +64,11 @@
   </style>
 </head>
 <body>
+  <button style="float:right; margin-bottom:20px;" onclick="window.location.href='index.html'">Đăng xuất</button>
   <h2>Quản lý điểm - Giáo viên</h2>
-  <select id="classSelect" ></select>
+  <select id="subjectSelect" onchange="loadStudents(this.value)">
+    <option value="0">Chọn lớp</option>
+  </select>
   <table border="1">
     <thead>
       <tr>

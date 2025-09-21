@@ -22,8 +22,8 @@ function loadClasses() {
     .then(r => r.json())
     .then(classes => {
       console.log(classes);
-      let select = document.getElementById("classSelect");
-      select.innerHTML = classes.map(c => `<option value="${c.id}">${c.name}</option>`).join("");
+      let select = document.getElementById("subjectSelect");
+      select.innerHTML += classes.map(c => `<option value="${c.id}">${c.name}</option>`).join("");
       
     });
 }
@@ -36,30 +36,58 @@ function loadSubjects() {
       if (subjects.length > 0) loadStudents();
     });
 }
-
+let editColor = "#44be44";
+let saveColor="#2572e5";
 function loadStudents() {
   let subjectId = document.getElementById("subjectSelect").value;
   fetch("api.php?action=get_students&subject_id=" + subjectId)
     .then(r => r.json())
     .then(data => {
+      console.log(data);
       let rows = "";
       data.forEach(st => {
-        rows += `<tr>
-          <td>${st.username}</td>
-          <td><input type="number" value="${st.score ?? ''}" id="score_${st.id}"></td>
-          <td><button onclick="saveGrade(${st.id},${subjectId})">Lưu</button></td>
-        </tr>`;
+        rows += `
+          <tr>
+            <td class="student-name">${st.name}</td>
+            <td>
+              <input  type="number"  min=0 max=10 value="${st.score ?? ''}"   id="score_${st.id}" class="score-input" disabled style="padding: 5px; color: #333; border: 1px solid #ccc; border-radius: 4px; width: 60px;">
+            </td>
+            <td>
+              <button data-state="0" onclick="editSave(${st.id},${subjectId},this)" class="edit-btn" style="background-color:${editColor};">Chỉnh sửa</button>
+            </td>
+          </tr>
+        `;
       });
       document.getElementById("studentTable").innerHTML = rows;
     });
 }
 
-function saveGrade(studentId, subjectId) {
+function editSave(studentId, subjectId,btn) {
   let score = document.getElementById("score_" + studentId).value;
-  fetch("api.php?action=update_grade", {
-    method: "POST",
-    body: JSON.stringify({ student_id: studentId, subject_id: subjectId, score })
-  }).then(() => alert("Đã lưu điểm!"));
+  let state = btn.getAttribute("data-state");
+  console.log("score", score, "state", state);
+  if (score === "" || isNaN(score) || score < 0 || score > 10) {
+    alert("Điểm không hợp lệ! Vui lòng nhập điểm từ 0 đến 10.");
+    return;
+  }
+  if (state === "0") {
+    // Chuyển sang trạng thái chỉnh sửa
+    document.getElementById("score_" + studentId).removeAttribute("disabled");
+    btn.innerText = "Lưu";
+    btn.setAttribute("data-state", "1");
+    btn.style.backgroundColor=saveColor;
+    return;
+  } // Lưu điểm
+  else {
+    document.getElementById("score_" + studentId).setAttribute("disabled", "true");
+    btn.innerText = "Chỉnh sửa";
+    btn.setAttribute("data-state", "0");
+    btn.style.backgroundColor=editColor;
+    fetch("api.php?action=update_grade", {
+      method: "POST",
+      body: JSON.stringify({ student_id: studentId, subject_id: subjectId, score })
+    }).then(() => alert("Đã lưu điểm!"));
+  }
 }
 
 function loadMyGrades() {
@@ -73,10 +101,17 @@ function loadMyGrades() {
 
 document.addEventListener("DOMContentLoaded", function() {
   // Kiểm tra xem trang này có thẻ select không
-  const classSelect = document.getElementById("classSelect");
+  const classSelect = document.getElementById("subjectSelect");
   console.log(classSelect);
   if (classSelect) {
     loadClasses();
   }
+  const myGradesTable = document.getElementById("myGrades");
+  console.log(myGradesTable);
+  if (myGradesTable) {
+    console.log("Loading my grades");
+    loadMyGrades();
+  }
 });
+console.log("index.js loaded");
 console.log("app.js loaded");

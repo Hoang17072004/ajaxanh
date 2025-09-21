@@ -38,7 +38,7 @@ if ($action == "get_subjects") {
 
 if ($action == "get_students") {
     $subject_id = $_GET['subject_id'];
-    $sql = "SELECT u.id, u.username, g.score
+    $sql = "SELECT u.id, u.username, g.score,u.name
             FROM student_class sc
             JOIN users u ON sc.student_id=u.id
             LEFT JOIN grades g ON g.student_id=u.id AND g.subject_id=$subject_id
